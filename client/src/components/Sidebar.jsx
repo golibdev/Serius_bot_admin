@@ -14,6 +14,11 @@ export const Sidebar = ({ toggle, clickToggle }) => {
          title: 'Courses',
          link: '/admin/courses',
          icon: 'fas fa-book'
+      },
+      {
+         title: 'Services',
+         link: '/admin/services',
+         icon: 'fas fa-cogs'
       }
    ]
    return (

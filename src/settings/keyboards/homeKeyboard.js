@@ -7,7 +7,7 @@ exports.homeKeyboard = {
             { text: "📚 O'quv darslar", callback_data: "courses" },
          ],
          [
-            // contact
+            { text: "🗒 Xizmatlar", callback_data: "service" },
             { text: "📞 Biz bilan bog'lanish", callback_data: "contact" },
          ]
       ]

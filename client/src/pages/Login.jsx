@@ -43,6 +43,7 @@ export const Login = () => {
             window.location.reload()
          }
       } catch (err) {
+         console.log(err.response);
          if(err.response === undefined) {
             toast.error('Internetga ulanmagan')
             return

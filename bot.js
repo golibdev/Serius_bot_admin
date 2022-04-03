@@ -3,6 +3,7 @@ const dotenv = require('dotenv')
 const { homeKeyboard } = require('./src/settings/keyboards/homeKeyboard')
 const { backKeyboard } = require('./src/settings/keyboards/backKeyboard')
 const { getAllCourses, getCourseById } = require('./src/settings/controllers/courseController')
+const { getAllServices, getServicesById } = require('./src/settings/controllers/serviceController')
 dotenv.config()
 
 const TOKEN = process.env.BOT_TOKEN
@@ -18,9 +19,6 @@ bot.on('callback_query', async ctx => {
    const first_name = ctx.from.first_name
    const { data } = ctx.callbackQuery
    const id = ctx.callbackQuery.from.id
-   const chatId = ctx.callbackQuery.message.chat.id
-   const inlineMessageId = ctx.callbackQuery.inline_message_id
-   const message_id = ctx.callbackQuery.message.message_id
    const text = `
    Assalomu alaykum azizlar
 
@@ -79,21 +77,66 @@ bot.on('callback_query', async ctx => {
    } else if(data === 'back') {
       ctx.deleteMessage()
       bot.telegram.sendMessage(id, `<b>${first_name}</b>, botga xush kelibsiz!`, homeKeyboard)
+   } else if(data === 'service' || data === 'back2') {
+      const services = await getAllServices()
+      services.push({
+         id: 'back',
+         title: '🔙 Ortga'
+      })
+
+      ctx.deleteMessage()
+
+      if(services.length > 1) {
+         bot.telegram.sendPhoto(id, "https://t.me/youngproger/311", {
+            reply_markup: {
+               inline_keyboard: services.map(service => {
+                  return [{
+                     text: service.title,
+                     callback_data: service.id
+                  }]
+               })
+            },
+            parse_mode: 'HTML'
+         })
+      } else {
+         bot.telegram.sendMessage(id, '<b>Xato!</b>', homeKeyboard)
+      }
    } else {
       const course = await getCourseById(data)
+      const service = await getServicesById(data)
       ctx.deleteMessage()
-      bot.telegram.sendPhoto(id, { source: `./public${course.image}` }, {
-         caption: `${course.description}`,
-         reply_markup: {
-            inline_keyboard: [
-               [{
-                  text: '🔙 Ortga',
-                  callback_data: 'back1'
-               }]
-            ]
-         },
-         parse_mode: 'HTML'
-      })
+      if(course) {
+         bot.telegram.sendPhoto(id, { source: `./public${course.image}` }, {
+            caption: `${course.description}`,
+            reply_markup: {
+               inline_keyboard: [
+                  [{
+                     text: '🔙 Ortga',
+                     callback_data: 'back1'
+                  }]
+               ]
+            },
+            parse_mode: 'HTML'
+         })
+         return
+      } else if(service) {
+         bot.telegram.sendPhoto(id, { source: `./public${service.image}` }, {
+            caption: `${service.description}`,
+            reply_markup: {
+               inline_keyboard: [
+                  [{
+                     text: '🔙 Ortga',
+                     callback_data: 'back2'
+                  }]
+               ]
+            },
+            parse_mode: 'HTML'
+         })
+         return
+      } else {
+         bot.telegram.sendMessage(id, '<b>Xato!</b>', homeKeyboard)
+         return
+      }
    }
 })
 
