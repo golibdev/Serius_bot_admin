@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseUrl = "https://api.serius.uz/api/v1/service";
+const baseUrl = "https://api.serius.uz/api/v1/service/";
 const token = localStorage.getItem("token");
 
 export const serviceApi = {
@@ -29,7 +29,7 @@ export const serviceApi = {
       }
    ),
    update: (id, data) => axios.put(
-      `${baseUrl}/${id}`,
+      `${baseUrl}${id}`,
       data,
       {
          headers: {
@@ -38,7 +38,7 @@ export const serviceApi = {
       }
    ),
    delete: (id) => axios.delete(
-      `${baseUrl}/${id}`,
+      `${baseUrl}${id}`,
       {
          headers: {
             'Authorization': `Bearer ${token}`

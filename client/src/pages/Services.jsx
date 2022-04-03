@@ -132,7 +132,9 @@ const RenderService = ({ service }) => {
          setTimeout(() => {
             window.location.reload()
          }, 1000);
-      } catch (err) {}
+      } catch (err) {
+         console.log(err.response)
+      }
    }
 
    const updateHandler = async (e, id) => {
@@ -159,7 +161,9 @@ const RenderService = ({ service }) => {
          setTimeout(() => {
             window.location.reload()
          }, 1000);
-      } catch (err) {}
+      } catch (err) {
+         console.log(err.response);
+      }
    }
    return (
       <div className="col-lg-4 col-md-6 col-sm-6 col-12">
@@ -187,7 +191,7 @@ const RenderService = ({ service }) => {
                         <div className="modal-body">
                            <button type="button" className="btn btn-success me-3" data-bs-dismiss="modal">No</button>
                            <button className='btn btn-danger' onClick={(e) => {
-                              deleteHandler(e, service._id)
+                              deleteHandler(e, service.id)
                            }}>Yes</button>
                         </div>
                      </div>

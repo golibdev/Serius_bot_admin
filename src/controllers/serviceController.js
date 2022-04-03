@@ -1,5 +1,6 @@
 const { Service } = require('../models')
 const path = require('path')
+const fs = require('fs')
 
 exports.getAll = async (req, res) => {
    try {
@@ -89,9 +90,9 @@ exports.create = async (req, res) => {
 exports.update = async (req, res) => {
    try {
       const id = req.params.id
-      const course = await Service.findById(id)
+      const service = await Service.findById(id)
 
-      if(!course) {
+      if(!service) {
          return res.status(404).json({
             message: 'No service found'
          })
@@ -104,7 +105,7 @@ exports.update = async (req, res) => {
          })
       }
 
-      await fs.unlinkSync(`public${course.image}`)
+      await fs.unlinkSync(`public${service.image}`)
       const image = req.files.image
 
       if(!image.mimetype.startsWith('image')) {
@@ -135,7 +136,7 @@ exports.update = async (req, res) => {
       })
 
       res.status(200).json({
-         message: 'Course updated'
+         message: 'Service updated'
       })
    } catch (err) {
       res.status(500).json({ err: err.message })
@@ -145,19 +146,19 @@ exports.update = async (req, res) => {
 exports.delete = async (req, res) => {
    try {
       const id = req.params.id
-      const course = await Service.findById(id)
+      const service = await Service.findById(id)
 
-      if(!course) {
+      if(!service) {
          return res.status(404).json({
             message: 'No service found'
          })
       }
 
-      await fs.unlinkSync(`public${course.image}`)
+      await fs.unlinkSync(`public${service.image}`)
       await Service.findByIdAndDelete(id)
 
       res.status(200).json({
-         message: 'Course deleted'
+         message: 'Service deleted'
       })
    } catch (err) {
       res.status(500).json({ err: err.message })
