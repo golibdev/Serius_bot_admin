@@ -168,7 +168,7 @@ const RenderService = ({ service }) => {
                <p className='card-title mb-0 mt-0 pb-0 pt-0'>{service.title}</p>
             </div>
             <div className="card-body">
-               <img src={`http://localhost:4002${service.image}`} className="w-100 img-fluid" alt="image" />   
+               <img src={`https://api.serius.uz${service.image}`} className="w-100 img-fluid" alt="image" />   
             </div>
             <div className='card-footer'>
                <button className='btn btn-danger me-3' data-bs-toggle="modal" data-bs-target={`#delete${service._id}`}>

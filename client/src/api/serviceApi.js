@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseUrl = "http://localhost:4002/api/v1/service";
+const baseUrl = "https://api.serius.uz/api/v1/service";
 const token = localStorage.getItem("token");
 
 export const serviceApi = {
