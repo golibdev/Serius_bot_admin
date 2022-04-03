@@ -155,14 +155,14 @@ const RenderService = ({ service }) => {
       data.append('description', updateDescription)
 
       try {
-         service.update(id, data)
+         serviceApi.update(id, data)
          toast.success('Updated')
 
          setTimeout(() => {
             window.location.reload()
          }, 1000);
       } catch (err) {
-         console.log(err.response);
+         console.log(err);
       }
    }
    return (
